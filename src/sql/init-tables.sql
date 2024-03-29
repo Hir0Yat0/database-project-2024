@@ -1,112 +1,74 @@
-CREATE TABLE "Billing" (
-  "Billing ID" INT AUTO_INCREMENT,
+CREATE TABLE Billing (
+  "Billing ID" SERIAL PRIMARY KEY,
   "Card Number" VARCHAR(16),
-  "Expiry" DATETIME,
+  "Expiry" TIMESTAMP,
   "First Name" VARCHAR(255),
   "Last Name" VARCHAR(255),
   "Monthly Amount" DECIMAL(10, 2),
-  "Billing Date" DATETIME,
-  PRIMARY KEY ("Billing ID")
+  "Billing Date" TIMESTAMP
 );
 
 CREATE TABLE "User" (
-  "User ID" INT AUTO_INCREMENT,
+  "User ID" SERIAL PRIMARY KEY,
   "Username" VARCHAR(255),
   "Email" VARCHAR(255),
   "First Name" VARCHAR(255),
   "Last Name" VARCHAR(255),
   "Phone Number" VARCHAR(15),
-  "User Type" ENUM (Customer, Staff),
+  "User Type" VARCHAR(10),
   "Password" VARCHAR(255),
-  "Billing ID" INT,
-  PRIMARY KEY ("User ID"),
-  CONSTRAINT "FK_User.Billing ID" 
-    FOREIGN KEY ("Billing ID")
-    REFERENCES "Billing" ("Billing ID")
+  "Billing ID" INT REFERENCES Billing ("Billing ID")
 );
 
-CREATE TABLE "Role" (
-  "Role ID" INT AUTO_INCREMENT,
-  "Role Name" VARCHAR(255),
-  PRIMARY KEY ("Role ID")
+CREATE TABLE Role (
+  "Role ID" SERIAL PRIMARY KEY,
+  "Role Name" VARCHAR(255)
 );
 
-CREATE TABLE "Branch" (
-  "Branch ID" TINYINT AUTO_INCREMENT,
-  "Address" VARCHAR(255),
-  PRIMARY KEY ("Branch ID")
+CREATE TABLE Branch (
+  "Branch ID" SERIAL PRIMARY KEY,
+  "Address" VARCHAR(255)
 );
 
-CREATE TABLE "Package" (
-  "Package ID" TINYINT AUTO_INCREMENT,
-  "Price" DECIMAL (10,2),
-  "Package Tier" ENUM (Gold, Silver, Bronze, Wood),
-  PRIMARY KEY ("Package ID")
+CREATE TABLE Package (
+  "Package ID" SERIAL PRIMARY KEY,
+  "Price" DECIMAL(10, 2),
+  "Package Tier" VARCHAR(10)
 );
 
-CREATE TABLE "Customer" (
-  "Customer ID" INT AUTO_INCREMENT,
-  "User ID" INT,
-  "Membership ID" INT Default NULL,
-  PRIMARY KEY ("Customer ID"),
-  CONSTRAINT "FK_Customer.User ID"
-    Foreign Key ("User ID") 
-    REFERENCES "User"("User ID"),
-  CONSTRAINT "FK_Customer.Membership ID"
-    Foreign Key ("Membership ID") 
-    REFERENCES "Membership"("Membership ID")
+CREATE TABLE Customer (
+  "Customer ID" SERIAL PRIMARY KEY,
+  "User ID" INT REFERENCES "User" ("User ID"),
+  "Membership ID" INT,
+  CONSTRAINT "FK_Customer.Membership ID" FOREIGN KEY ("Membership ID") REFERENCES Membership ("Membership ID")
 );
 
-CREATE TABLE "Membership" (
-  "Customer ID" INT,
-  "Package ID" TINYINT,
-  "Date Started" DATETIME,
-  PRIMARY KEY ("Customer ID"),
-  CONSTRAINT "FK_Membership.Customer ID"
-    Foreign Key ("Customer ID") 
-    REFERENCES "Customer"("Customer ID"),
-  CONSTRAINT "FK_Membership.Package ID"
-    Foreign Key ("Package ID") 
-    REFERENCES "Package"("Package ID"),
+CREATE TABLE Membership (
+  "Membership ID" SERIAL PRIMARY KEY,
+  "Customer ID" INT REFERENCES Customer ("Customer ID"),
+  "Package ID" INT REFERENCES Package ("Package ID"),
+  "Date Started" TIMESTAMP
 );
 
-CREATE TABLE "Staff" (
-  "Staff ID" INT AUTO_INCREMENT,
-  "User ID" INT,
-  "Role ID" INT,
-  "Branch ID" TINYINT,
-  PRIMARY KEY ("Staff ID"),
-  CONSTRAINT "FK_Staff.User ID"
-    Foreign Key ("User ID") 
-    REFERENCES "User"("User ID"),
-  CONSTRAINT "FK_Staff.Role ID"
-    Foreign Key ("Role ID") 
-    REFERENCES "Role"("Role ID"),
-  CONSTRAINT "FK_Staff.Branch ID"
-    Foreign Key ("Branch ID") 
-    REFERENCES "Branch"("Branch ID"),
+CREATE TABLE Staff (
+  "Staff ID" SERIAL PRIMARY KEY,
+  "User ID" INT REFERENCES "User" ("User ID"),
+  "Role ID" INT REFERENCES Role ("Role ID"),
+  "Branch ID" INT REFERENCES Branch ("Branch ID")
 );
 
-CREATE TABLE "Equipment" (
-  "Equipment ID" INT AUTO_INCREMENT,
+CREATE TABLE Equipment (
+  "Equipment ID" SERIAL PRIMARY KEY,
   "Name" VARCHAR(255),
-  "Purchase Date" DATETIME,
-  "Company ID" INT,
+  "Purchase Date" TIMESTAMP,
+  "Company ID" INT REFERENCES "Equipment Company" ("Company ID"),
   "Equipment Details" VARCHAR(255),
-  "Equipment Type" ENUM (Legs, Arms, Chest, Cardio, Back, Deltoids),
-  "Branch ID" TINYINT,
-  PRIMARY KEY ("Equipment ID"),
-  CONSTRAINT "FK_Equipment.Branch ID"
-    FOREIGN KEY ("Branch ID")
-    REFERENCES "Branch"("Branch ID"),
-  CONSTRAINT "FK_Equipment.Company ID"
-    FOREIGN KEY ("Company ID")
-    REFERENCES "Company"("Company ID")
+  "Equipment Type" VARCHAR(10),
+  "Branch ID" INT REFERENCES Branch ("Branch ID")
 );
 
 CREATE TABLE "Equipment Company" (
-  "Company ID" INT AUTO_INCREMENT,
+  "Company ID" SERIAL PRIMARY KEY,
   "Name" VARCHAR(255),
-  "Phone Number" VARCHAR(15),
-  PRIMARY KEY ("Company ID")
+  "Phone Number" VARCHAR(15)
 );
