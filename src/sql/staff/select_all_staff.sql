@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION "select_all_staff"()
+RETURNS SETOF "Staff" AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM "Staff";
+END;
+$$ LANGUAGE PLPGSQL;
+
+SELECT select_all_staff();
