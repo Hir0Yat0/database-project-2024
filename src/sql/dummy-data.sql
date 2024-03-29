@@ -31,6 +31,10 @@ INSERT INTO "Equipment Type" ("Name") VALUES ('Treadmill'), ('Dumbbell'), ('Stat
 -- Dummy data for Branch table
 INSERT INTO "Branch" ("Address") VALUES ('123 Main St'), ('456 Elm St');
 
+-- Dummy data for Staff table
+INSERT INTO "Staff" ("User ID", "Role ID", "Branch ID")
+VALUES (1, 1, 1), (2, 2, 2);
+
 -- Dummy data for Manage table
 INSERT INTO "Manage" ("Branch ID", "Manager ID")
 VALUES (1, 1), (2, 2);
@@ -41,6 +45,7 @@ VALUES ('Company A', '123-456-7890'), ('Company B', '987-654-3210');
 
 -- Dummy data for Equipment table
 INSERT INTO "Equipment" ("Name", "Purchase Date", "Company ID", "Equipment Details", "Equipment Type ID", "Branch ID")
-VALUES ('Treadmill 1', '2023-01-01', 1, 'High-quality treadmill', 1, 1),
-       ('Dumbbell Set 1', '2023-02-01', 2, 'Set of dumbbells', 2, 1),
-       ('Bike 1', '2023-03-01', 1, 'Stationary bike', 3, 2);
+VALUES
+  ('Treadmill 1', '2023-01-01', 1, 'High-quality treadmill', 1, 1),
+  ('Dumbbell Set 1', '2023-02-01', 2, 'Set of dumbbells', 2, 1),
+  ('Bike 1', '2023-03-01', 1, 'Stationary bike', 3, 2);
