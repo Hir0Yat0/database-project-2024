@@ -1,3 +1,26 @@
+-- Drop existing tables if they exist
+drop table if exists role cascade;
+
+drop table if exists membership cascade;
+
+drop table if exists package cascade;
+
+drop table if exists customer cascade;
+
+drop table if exists "User" cascade;
+
+drop table if exists billing cascade;
+
+drop table if exists "Equipment Type" cascade;
+
+drop table if exists branch cascade;
+
+drop table if exists staff cascade;
+
+drop table if exists "Equipment Company" cascade;
+
+
+-- Create Billing table
 CREATE TABLE Billing (
   "Billing ID" SERIAL PRIMARY KEY,
   "Card Number" VARCHAR(16),
@@ -8,6 +31,7 @@ CREATE TABLE Billing (
   "Billing Date" TIMESTAMP
 );
 
+-- Create User table
 CREATE TABLE "User" (
   "User ID" SERIAL PRIMARY KEY,
   "Username" VARCHAR(255),
@@ -15,23 +39,26 @@ CREATE TABLE "User" (
   "First Name" VARCHAR(255),
   "Last Name" VARCHAR(255),
   "Phone Number" VARCHAR(15),
-  "User Type" VARCHAR(20), -- Use VARCHAR instead of ENUM
+  "User Type" VARCHAR(20),
   "Password" VARCHAR(255),
   "Billing ID" INT,
   FOREIGN KEY ("Billing ID") REFERENCES Billing ("Billing ID")
 );
 
+-- Create Role table
 CREATE TABLE Role (
   "Role ID" SERIAL PRIMARY KEY,
   "Role Name" VARCHAR(255)
 );
 
+-- Create Package table
 CREATE TABLE Package (
   "Package ID" SERIAL PRIMARY KEY,
   "Price" DECIMAL(10,2),
   "Package Name" VARCHAR(255)
 );
 
+-- Create Customer table
 CREATE TABLE Customer (
   "Customer ID" SERIAL PRIMARY KEY,
   "User ID" INT,
@@ -39,6 +66,7 @@ CREATE TABLE Customer (
   FOREIGN KEY ("User ID") REFERENCES "User" ("User ID")
 );
 
+-- Create Membership table
 CREATE TABLE Membership (
   "Membership ID" SERIAL PRIMARY KEY,
   "Customer ID" INT,
@@ -48,21 +76,21 @@ CREATE TABLE Membership (
   FOREIGN KEY ("Package ID") REFERENCES Package ("Package ID")
 );
 
+-- Create Staff table
 CREATE TABLE Staff (
   "Staff ID" SERIAL PRIMARY KEY,
   "User ID" INT,
   "Role ID" INT,
-  "Branch ID" INT,
-  FOREIGN KEY ("User ID") REFERENCES "User" ("User ID"),
-  FOREIGN KEY ("Role ID") REFERENCES Role ("Role ID"),
-  FOREIGN KEY ("Branch ID") REFERENCES Branch ("Branch ID")
+  "Branch ID" INT
 );
 
+-- Create Equipment Type table
 CREATE TABLE "Equipment Type" (
-  "Equipment Type ID" SERIAL PRIMARY KEY,
-  "Equipment Name" VARCHAR(255)
+  "ID" SERIAL PRIMARY KEY,
+  "Name" VARCHAR(255) UNIQUE
 );
 
+-- Create Branch table
 CREATE TABLE Branch (
   "Branch ID" SERIAL PRIMARY KEY,
   "Address" VARCHAR(255),
@@ -70,21 +98,29 @@ CREATE TABLE Branch (
   FOREIGN KEY ("Manager ID") REFERENCES Staff ("Staff ID")
 );
 
+-- Create Equipment Company table
+CREATE TABLE "Equipment Company" (
+  "Company ID" SERIAL PRIMARY KEY,
+  "Name" VARCHAR(255),
+  "Phone Number" VARCHAR(15)
+);
+
+-- Create Equipment table
 CREATE TABLE Equipment (
   "Equipment ID" SERIAL PRIMARY KEY,
   "Name" VARCHAR(255),
   "Purchase Date" TIMESTAMP,
   "Company ID" INT,
   "Equipment Details" VARCHAR(255),
-  "Equipment Type" VARCHAR(255),
+  "Equipment Type Name" VARCHAR(255),
   "Branch ID" INT,
   FOREIGN KEY ("Company ID") REFERENCES "Equipment Company" ("Company ID"),
-  FOREIGN KEY ("Equipment Type") REFERENCES "Equipment Type" ("Equipment Name"),
+  FOREIGN KEY ("Equipment Type Name") REFERENCES "Equipment Type" ("Name"),
   FOREIGN KEY ("Branch ID") REFERENCES Branch ("Branch ID")
 );
 
-CREATE TABLE "Equipment Company" (
-  "Company ID" SERIAL PRIMARY KEY,
-  "Name" VARCHAR(255),
-  "Phone Number" VARCHAR(15)
-);
+-- Alter Staff table to add foreign key constraint to Branch table
+ALTER TABLE Staff
+ADD CONSTRAINT fk_branch_id
+FOREIGN KEY ("Branch ID")
+REFERENCES Branch ("Branch ID");
