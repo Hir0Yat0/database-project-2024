@@ -15,9 +15,10 @@ CREATE TABLE "User" (
   "First Name" VARCHAR(255),
   "Last Name" VARCHAR(255),
   "Phone Number" VARCHAR(15),
-  "User Type" VARCHAR(10),
+  "User Type" VARCHAR(20), -- Use VARCHAR instead of ENUM
   "Password" VARCHAR(255),
-  "Billing ID" INT REFERENCES Billing ("Billing ID")
+  "Billing ID" INT,
+  FOREIGN KEY ("Billing ID") REFERENCES Billing ("Billing ID")
 );
 
 CREATE TABLE Role (
@@ -25,46 +26,61 @@ CREATE TABLE Role (
   "Role Name" VARCHAR(255)
 );
 
-CREATE TABLE Branch (
-  "Branch ID" SERIAL PRIMARY KEY,
-  "Address" VARCHAR(255)
-);
-
 CREATE TABLE Package (
   "Package ID" SERIAL PRIMARY KEY,
-  "Price" DECIMAL(10, 2),
-  "Package Tier" VARCHAR(10)
+  "Price" DECIMAL(10,2),
+  "Package Name" VARCHAR(255)
 );
 
 CREATE TABLE Customer (
   "Customer ID" SERIAL PRIMARY KEY,
-  "User ID" INT REFERENCES "User" ("User ID"),
-  "Membership ID" INT,
-  CONSTRAINT "FK_Customer.Membership ID" FOREIGN KEY ("Membership ID") REFERENCES Membership ("Membership ID")
+  "User ID" INT,
+  "Membership ID" INT DEFAULT NULL,
+  FOREIGN KEY ("User ID") REFERENCES "User" ("User ID")
 );
 
 CREATE TABLE Membership (
   "Membership ID" SERIAL PRIMARY KEY,
-  "Customer ID" INT REFERENCES Customer ("Customer ID"),
-  "Package ID" INT REFERENCES Package ("Package ID"),
-  "Date Started" TIMESTAMP
+  "Customer ID" INT,
+  "Package ID" INT,
+  "Date Started" TIMESTAMP,
+  FOREIGN KEY ("Customer ID") REFERENCES Customer ("Customer ID"),
+  FOREIGN KEY ("Package ID") REFERENCES Package ("Package ID")
 );
 
 CREATE TABLE Staff (
   "Staff ID" SERIAL PRIMARY KEY,
-  "User ID" INT REFERENCES "User" ("User ID"),
-  "Role ID" INT REFERENCES Role ("Role ID"),
-  "Branch ID" INT REFERENCES Branch ("Branch ID")
+  "User ID" INT,
+  "Role ID" INT,
+  "Branch ID" INT,
+  FOREIGN KEY ("User ID") REFERENCES "User" ("User ID"),
+  FOREIGN KEY ("Role ID") REFERENCES Role ("Role ID"),
+  FOREIGN KEY ("Branch ID") REFERENCES Branch ("Branch ID")
+);
+
+CREATE TABLE "Equipment Type" (
+  "Equipment Type ID" SERIAL PRIMARY KEY,
+  "Equipment Name" VARCHAR(255)
+);
+
+CREATE TABLE Branch (
+  "Branch ID" SERIAL PRIMARY KEY,
+  "Address" VARCHAR(255),
+  "Manager ID" INT,
+  FOREIGN KEY ("Manager ID") REFERENCES Staff ("Staff ID")
 );
 
 CREATE TABLE Equipment (
   "Equipment ID" SERIAL PRIMARY KEY,
   "Name" VARCHAR(255),
   "Purchase Date" TIMESTAMP,
-  "Company ID" INT REFERENCES "Equipment Company" ("Company ID"),
+  "Company ID" INT,
   "Equipment Details" VARCHAR(255),
-  "Equipment Type" VARCHAR(10),
-  "Branch ID" INT REFERENCES Branch ("Branch ID")
+  "Equipment Type" VARCHAR(255),
+  "Branch ID" INT,
+  FOREIGN KEY ("Company ID") REFERENCES "Equipment Company" ("Company ID"),
+  FOREIGN KEY ("Equipment Type") REFERENCES "Equipment Type" ("Equipment Name"),
+  FOREIGN KEY ("Branch ID") REFERENCES Branch ("Branch ID")
 );
 
 CREATE TABLE "Equipment Company" (
