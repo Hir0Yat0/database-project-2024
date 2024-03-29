@@ -20,6 +20,8 @@ DROP TABLE IF EXISTS "Staff" CASCADE;
 
 DROP TABLE IF EXISTS "Equipment Company" CASCADE;
 
+DROP TABLE IF EXISTS "Manage" CASCADE;
+
 
 -- Create Billing table
 CREATE TABLE "Billing" (
@@ -78,25 +80,28 @@ CREATE TABLE "Membership" (
   FOREIGN KEY ("Package ID") REFERENCES "Package" ("Package ID")
 );
 
-CREATE TABLE "Staff" (
-  "Staff ID" SERIAL PRIMARY KEY,
-  "User ID" INT,
-  "Role ID" INT,
-  "Branch ID" INT,
-  FOREIGN KEY ("User ID") REFERENCES "User" ("User ID"),
-  FOREIGN KEY ("Role ID") REFERENCES "Role" ("Role ID"),
-  FOREIGN KEY ("Branch ID") REFERENCES "Branch" ("Branch ID")
+-- Create Branch table
+CREATE TABLE "Branch" (
+  "Branch ID" SERIAL PRIMARY KEY,
+  "Address" VARCHAR(255)
+);
+
+
+CREATE TABLE "Staff"
+(
+    "Staff ID"  SERIAL PRIMARY KEY,
+    "User ID"   INT,
+    "Role ID"   INT,
+    "Branch ID" INT,
+    FOREIGN KEY ("User ID") REFERENCES "User" ("User ID"),
+    FOREIGN KEY ("Role ID") REFERENCES "Role" ("Role ID"),
+    FOREIGN KEY ("Branch ID") REFERENCES "Branch" ("Branch ID")
+);
 
 -- Create Equipment Type table
 CREATE TABLE "Equipment Type" (
   "ID" SERIAL PRIMARY KEY,
   "Name" VARCHAR(255) UNIQUE
-);
-
--- Create Branch table
-CREATE TABLE "Branch" (
-  "Branch ID" SERIAL PRIMARY KEY,
-  "Address" VARCHAR(255),
 );
 
 CREATE TABLE "Manage" (
@@ -120,7 +125,7 @@ CREATE TABLE "Equipment" (
   "Purchase Date" TIMESTAMP,
   "Company ID" INT,
   "Equipment Details" VARCHAR(255),
-  "Equipment Type ID" VARCHAR(255),
+  "Equipment Type ID" INT,
   "Branch ID" INT,
   FOREIGN KEY ("Company ID") REFERENCES "Equipment Company" ("Company ID"),
   FOREIGN KEY ("Equipment Type ID") REFERENCES "Equipment Type" ("ID"),

@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION getAllBranches()
+RETURNS SETOF "Branch" AS
+$$
+    SELECT * FROM "Branch";
+$$ LANGUAGE SQL;
+
+SELECT getAllBranches();
+
+CREATE OR REPLACE FUNCTION getAllUsers()
+RETURNS SETOF "User" AS
+$$
+    SELECT * FROM "User";
+$$ LANGUAGE SQL;
+
+SELECT getAllUsers();
