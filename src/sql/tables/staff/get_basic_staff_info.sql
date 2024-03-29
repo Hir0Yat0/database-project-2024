@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION "get_basic_staff_info"()
+RETURNS SETOF "Staff" AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM "Staff";
+END;
+$$ LANGUAGE PLPGSQL;
+
+
