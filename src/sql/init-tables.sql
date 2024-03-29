@@ -84,7 +84,7 @@ CREATE TABLE "Staff" (
   "Role ID" INT,
   "Branch ID" INT,
   FOREIGN KEY ("User ID") REFERENCES "User" ("User ID"),
-  FOREIGN KEY ("Role ID") REFERENCES Role ("Role ID"),
+  FOREIGN KEY ("Role ID") REFERENCES "Role" ("Role ID"),
   FOREIGN KEY ("Branch ID") REFERENCES "Branch" ("Branch ID")
 
 -- Create Equipment Type table
@@ -97,7 +97,12 @@ CREATE TABLE "Equipment Type" (
 CREATE TABLE "Branch" (
   "Branch ID" SERIAL PRIMARY KEY,
   "Address" VARCHAR(255),
+);
+
+CREATE TABLE "Manage" (
+  "Branch ID" SERIAL PRIMARY KEY,
   "Manager ID" INT,
+  FOREIGN KEY ("Branch ID") REFERENCES "Branch" ("Branch ID"),
   FOREIGN KEY ("Manager ID") REFERENCES "Staff" ("Staff ID")
 );
 
