@@ -1,24 +1,24 @@
 
 -- Drop existing tables if they exist
-drop table if exists "Role" cascade;
+DROP TABLE IF EXISTS "Role" CASCADE;
 
-drop table if exists membership cascade;
+DROP TABLE IF EXISTS "Membership" CASCADE;
 
-drop table if exists package cascade;
+DROP TABLE IF EXISTS "Package" CASCADE;
 
-drop table if exists customer cascade;
+DROP TABLE IF EXISTS "Customer" CASCADE;
 
-drop table if exists "User" cascade;
+DROP TABLE IF EXISTS "User" CASCADE;
 
-drop table if exists billing cascade;
+DROP TABLE IF EXISTS "Billing" CASCADE;
 
-drop table if exists "Equipment Type" cascade;
+DROP TABLE IF EXISTS "Equipment Type" CASCADE;
 
-drop table if exists branch cascade;
+DROP TABLE IF EXISTS "Branch" CASCADE;
 
-drop table if exists staff cascade;
+DROP TABLE IF EXISTS "Staff" CASCADE;
 
-drop table if exists "Equipment Company" cascade;
+DROP TABLE IF EXISTS "Equipment Company" CASCADE;
 
 
 -- Create Billing table
