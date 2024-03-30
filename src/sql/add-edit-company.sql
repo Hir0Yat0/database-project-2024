@@ -33,7 +33,7 @@ BEGIN
     -- Delete from Equipment Company table
     DELETE FROM public."Equipment Company"
     WHERE "Company ID" = company_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;

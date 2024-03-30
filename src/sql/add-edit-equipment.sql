@@ -30,6 +30,7 @@ BEGIN
                                                                              equipment_details, equipment_type_id,
                                                                              branch_id);
     -- Set status_code to 0 indicating success
+    COMMIT;
     status_code := 0;
 END;
 $$ LANGUAGE plpgsql;
@@ -58,7 +59,7 @@ BEGIN
         "Equipment Type ID" = equipment_type_id,
         "Branch ID" = branch_id
     WHERE "Equipment ID" = equipment_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
@@ -76,7 +77,7 @@ $$
 BEGIN
     DELETE FROM public."Equipment"
     WHERE "Equipment ID" = equipment_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
@@ -91,7 +92,7 @@ CREATE OR REPLACE PROCEDURE add_equipment_type(
 $$
 BEGIN
     INSERT INTO public."Equipment Type"("Name") VALUES (name);
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
@@ -108,7 +109,7 @@ BEGIN
     -- Delete from Equipment Type table
     DELETE FROM public."Equipment Type"
     WHERE "ID" = type_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
