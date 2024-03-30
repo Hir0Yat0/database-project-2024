@@ -68,3 +68,50 @@ CALL edit_equipment(4, 'Treadmill 2','2023-01-01 00:00:00.000000',1,
                    'Highest-quality treadmill',
                    1,1, 0);
 
+CREATE OR REPLACE PROCEDURE delete_equipment(
+    IN equipment_id INT,
+    INOUT status_code INT
+) AS
+$$
+BEGIN
+    DELETE FROM public."Equipment"
+    WHERE "Equipment ID" = equipment_id;
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL delete_equipment(4, 0);
+
+CREATE OR REPLACE PROCEDURE add_equipment_type(
+    IN name VARCHAR(255),
+    INOUT status_code INT
+) AS
+$$
+BEGIN
+    INSERT INTO public."Equipment Type"("Name") VALUES (name);
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL add_equipment_type('Cardio', 0);
+
+CREATE OR REPLACE PROCEDURE delete_equipment_type(
+    IN type_id INT,
+    INOUT status_code INT
+) AS
+$$
+BEGIN
+    -- Delete from Equipment Type table
+    DELETE FROM public."Equipment Type"
+    WHERE "ID" = type_id;
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL delete_equipment_type(4, 0);

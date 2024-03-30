@@ -73,4 +73,24 @@ $$ LANGUAGE plpgsql;
 
 CALL edit_staff(3, 6, 'Anish again', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
 
+CREATE OR REPLACE PROCEDURE delete_staff(
+    IN user_id INT,
+    IN staff_id INT,
+    INOUT status_code INT
+) AS
+$$
+BEGIN
+    -- Delete from Staff table
+    DELETE FROM public."Staff"
+    WHERE "Staff ID" = staff_id;
+
+    DELETE FROM public."User"
+    WHERE "User ID" = user_id;
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL delete_staff(3, 6, 0)
 

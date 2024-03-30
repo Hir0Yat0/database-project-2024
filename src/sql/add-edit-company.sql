@@ -23,3 +23,20 @@ END;
 $$ LANGUAGE plpgsql;
 
 CALL edit_company(3, 'Cooler Company', '555-555-6666', 0);
+
+CREATE OR REPLACE PROCEDURE delete_company(
+    IN company_id INT,
+    INOUT status_code INT
+) AS
+$$
+BEGIN
+    -- Delete from Equipment Company table
+    DELETE FROM public."Equipment Company"
+    WHERE "Company ID" = company_id;
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL delete_company(3, 0);
