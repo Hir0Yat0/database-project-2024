@@ -49,3 +49,7 @@ VALUES
   ('Treadmill 1', '2023-01-01', 1, 'High-quality treadmill', 1, 1),
   ('Dumbbell Set 1', '2023-02-01', 2, 'Set of dumbbells', 2, 1),
   ('Bike 1', '2023-03-01', 1, 'Stationary bike', 3, 2);
+
+-- Dummy data for Announcements table
+INSERT INTO "Announcements" ("Details")
+VALUES ('World has ended'), ('Hello ajarn'), ('Hello top');

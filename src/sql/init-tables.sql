@@ -22,6 +22,8 @@ DROP TABLE IF EXISTS "Equipment Company" CASCADE;
 
 DROP TABLE IF EXISTS "Manage" CASCADE;
 
+DROP TABLE IF EXISTS "Announcements" CASCADE;
+
 
 -- Create Billing table
 CREATE TABLE "Billing" (
@@ -130,4 +132,10 @@ CREATE TABLE "Equipment" (
   FOREIGN KEY ("Company ID") REFERENCES "Equipment Company" ("Company ID"),
   FOREIGN KEY ("Equipment Type ID") REFERENCES "Equipment Type" ("ID"),
   FOREIGN KEY ("Branch ID") REFERENCES "Branch" ("Branch ID")
+);
+
+-- Create Announcements table
+CREATE TABLE "Announcements" (
+  "ID" SERIAL PRIMARY KEY,
+  "Details" VARCHAR(255)
 );
