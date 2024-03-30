@@ -10,4 +10,5 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-edit
+CALL edit_user_password(4,'pass2');
+SELECT select_all_users();
