@@ -31,28 +31,46 @@ $$ LANGUAGE plpgsql;
 
 CALL add_staff('anish', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
 
-CREATE OR REPLACE PROCEDURE add_company(IN name VARCHAR(255), IN phone_number VARCHAR(15), INOUT status_code INT) AS
+CREATE OR REPLACE PROCEDURE edit_staff(
+    IN user_id INT,
+    IN staff_id INT,
+    IN username VARCHAR(255),
+    IN email VARCHAR(255),
+    IN first_name VARCHAR(255),
+    IN last_name VARCHAR(255),
+    IN phone_number VARCHAR(15),
+    IN password VARCHAR(255),
+    IN role_id INT,
+    IN branch_id INT,
+    INOUT status_code INT
+) AS
 $$
 BEGIN
-    INSERT INTO public."Equipment Company"("Name", "Phone Number") VALUES (name, phone_number);
-    COMMIT;
+    -- Update user details
+    UPDATE public."User"
+    SET
+        "Username" = username,
+        "Email" = email,
+        "First Name" = first_name,
+        "Last Name" = last_name,
+        "Phone Number" = phone_number,
+        "Password" = password
+    WHERE
+        "User ID" = user_id;
 
-    status_code := 0; -- Assigning 0 to status_code
+    -- Update staff details
+    UPDATE public."Staff"
+    SET
+        "Role ID" = role_id,
+        "Branch ID" = branch_id
+    WHERE
+        "Staff ID" = staff_id;
+
+    -- Set status_code to 0 indicating success
+    status_code := 0;
 END;
 $$ LANGUAGE plpgsql;
 
-CALL add_company('Cool Company', '555-555-6666', 0);
+CALL edit_staff(3, 6, 'Anish again', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
 
-CREATE OR REPLACE PROCEDURE edit_company(IN company_id INT, IN name VARCHAR(255), IN phone_number VARCHAR(15), INOUT status_code INT) AS
-$$
-BEGIN
-    UPDATE public."Equipment Company"
-        SET "Name" = name,
-            "Phone Number" = phone_number
-        WHERE "Company ID" = company_id;
-    COMMIT;
-    status_code := 0; -- Assigning 0 to status_code
-END;
-$$ LANGUAGE plpgsql;
 
-CALL edit_company(3, 'Cooler Company', '555-555-6666', 0);
