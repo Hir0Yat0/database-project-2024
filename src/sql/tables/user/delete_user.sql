@@ -1,0 +1,8 @@
+-- CREATE OR REPLACE PROCEDURE "delete_user"(userid INT)
+-- AS
+-- $$
+-- BEGIN
+--     DELETE ;
+--     COMMIT;
+-- END;
+-- $$ LANGUAGE PLPGSQL;
