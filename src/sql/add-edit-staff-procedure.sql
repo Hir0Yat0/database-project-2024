@@ -65,7 +65,7 @@ BEGIN
         "Branch ID" = branch_id
     WHERE
         "Staff ID" = staff_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
@@ -89,6 +89,7 @@ BEGIN
 
     -- Set status_code to 0 indicating success
     status_code := 0;
+    COMMIT;
 END;
 $$ LANGUAGE plpgsql;
 

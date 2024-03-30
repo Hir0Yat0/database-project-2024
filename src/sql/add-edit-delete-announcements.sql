@@ -19,7 +19,7 @@ BEGIN
     UPDATE public."Announcements"
     SET "Details" = details
     WHERE "ID" = announcement_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
@@ -35,7 +35,7 @@ $$
 BEGIN
     DELETE FROM public."Announcements"
     WHERE "ID" = announcement_id;
-
+    COMMIT;
     -- Set status_code to 0 indicating success
     status_code := 0;
 END;
