@@ -1,0 +1,8 @@
+CREATE OR REPLACE FUNCTION "select_all_package"()
+RETURNS SETOF "Package" AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM "Package";
+END;
+$$ LANGUAGE PLPGSQL;
+
