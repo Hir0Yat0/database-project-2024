@@ -1,0 +1,7 @@
+CREATE OR REPLACE FUNCTION "select_all_member_ship"()
+RETURNS SETOF "Membership" AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM "Membership";
+END;
+$$ LANGUAGE PLPGSQL;
