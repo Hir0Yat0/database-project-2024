@@ -65,7 +65,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL edit_equipment(4, 'Treadmill 2','2023-01-01 00:00:00.000000',1,
+CALL edit_equipment(5, 'Treadmill 2','2023-01-01 00:00:00.000000',1,
                    'Highest-quality treadmill',
                    1,1, 0);
 
@@ -83,7 +83,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_equipment(4, 0);
+CALL delete_equipment(5, 0);
 
 CREATE OR REPLACE PROCEDURE add_equipment_type(
     IN name VARCHAR(255),
@@ -115,4 +115,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_equipment_type(4, 0);
+CALL delete_equipment_type(5, 0);

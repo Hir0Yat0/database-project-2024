@@ -44,7 +44,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_branch(3, 0);
+CALL delete_branch(4, 0);
 
 CREATE OR REPLACE PROCEDURE edit_branch(
     IN branch_id INT,
@@ -64,5 +64,5 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL edit_branch(1, '1234 Main St', 0);
+CALL edit_branch(1, '123 Main St', 0);
 

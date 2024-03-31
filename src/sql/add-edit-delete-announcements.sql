@@ -25,7 +25,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL edit_announcement(4, 'Updated announcement', 0);
+CALL edit_announcement(3, 'Updated announcement', 0);
 
 CREATE OR REPLACE PROCEDURE delete_announcement(
     IN announcement_id INT,
@@ -41,7 +41,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_announcement(4, 0);
+CALL delete_announcement(5, 0);
 
 CREATE OR REPLACE FUNCTION get_all_announcements()
 RETURNS SETOF "Announcements" AS

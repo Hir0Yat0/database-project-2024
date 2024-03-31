@@ -22,7 +22,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL edit_company(3, 'Cooler Company', '555-555-6666', 0);
+CALL edit_company(4, 'Cooler Company', '555-555-6666', 0);
 
 CREATE OR REPLACE PROCEDURE delete_company(
     IN company_id INT,
@@ -39,4 +39,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_company(3, 0);
+CALL delete_company(4, 0);

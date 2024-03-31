@@ -59,14 +59,3 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT getAllCompaniesForBranch(1);
-
--- CREATE OR REPLACE PROCEDURE delete_staff(IN staff_id INT, INOUT status_code INT) AS
--- $$
--- BEGIN
---     DELETE FROM public."Staff" WHERE "Staff ID" = staff_id;
---     status_code := 0; -- Assigning 0 to status_code
---     COMMIT;
--- END;
--- $$ LANGUAGE plpgsql;
---
--- CALL delete_staff(5, 0);

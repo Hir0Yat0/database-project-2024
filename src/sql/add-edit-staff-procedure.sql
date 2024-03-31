@@ -29,7 +29,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL add_staff('anish', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
+CALL add_staff('anish', 'anish@anish.anish', 'anish', 'anish',
+               '000-000-0000', 'hardpassword', 1, 1, 0);
 
 CREATE OR REPLACE PROCEDURE edit_staff(
     IN user_id INT,
@@ -71,7 +72,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL edit_staff(3, 6, 'Anish again', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
+CALL edit_staff(5, 7, 'Anish again', 'anish@anish.anish', 'anish', 'anish', '000-000-0000', 'hardpassword', 1, 1, 0);
 
 CREATE OR REPLACE PROCEDURE delete_staff(
     IN user_id INT,
@@ -93,5 +94,5 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL delete_staff(3, 6, 0)
+CALL delete_staff(5, 7, 0)
 
